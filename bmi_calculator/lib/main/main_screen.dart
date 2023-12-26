@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../result/result_screen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -105,16 +106,28 @@ class _MainScreenState extends State<MainScreen> {
                       /// 저장 기능
                       save();
 
+                      // [방법1]
+                      // context.go('/result?height=${_heightController.text}&weight=${_weightController.text}');
+
+                      // [방법2]
+                      context.push(Uri(path: '/result', queryParameters: {
+                        'height': _heightController.text,
+                        'weight': _weightController.text,
+                      }).toString());
+
+                      // [방법3]
                       // navpush -> 라이브 템플릿 추가
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ResultScreen(
-                            height: double.parse(_heightController.text),
-                            weight: double.parse(_weightController.text),
-                          ),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => ResultScreen(
+                      //       height: double.parse(_heightController.text),
+                      //       weight: double.parse(_weightController.text),
+                      //     ),
+                      //   ),
+                      // );
+
+
                     },
                     child: const Text('결과')),
               ],
